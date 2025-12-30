@@ -1,15 +1,16 @@
-import { createFileRoute } from '@tanstack/react-router';
 import { useChat } from '@ai-sdk/react';
+import { createFileRoute } from '@tanstack/react-router';
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from 'ai';
 import { ArrowUpIcon, BotIcon, Loader2Icon, UserIcon } from 'lucide-react';
 import { useState } from 'react';
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupTextarea } from '@/components/ui/input-group';
+
 import {
 	Conversation,
 	ConversationContent,
 	ConversationEmptyState,
 	ConversationScrollButton,
 } from '@/components/ai-elements/conversation';
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupTextarea } from '@/components/ui/input-group';
 
 export const Route = createFileRoute('/')({
 	component: App,

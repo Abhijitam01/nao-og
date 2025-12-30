@@ -2,4 +2,16 @@
 
 import { tanstackConfig } from '@tanstack/eslint-config';
 
-export default [...tanstackConfig];
+import rootConfig from '../../eslint.config.js';
+
+export default [
+	...rootConfig,
+	...tanstackConfig,
+	{
+		rules: {
+			'simple-import-sort/imports': 'off',
+			'simple-import-sort/exports': 'off',
+			'sort-imports': ['error', { ignoreDeclarationSort: true, ignoreMemberSort: true }],
+		},
+	},
+];

@@ -1,15 +1,26 @@
-import Fastify from 'fastify';
-import dotenv from 'dotenv';
+import 'dotenv/config';
+
 import { openai } from '@ai-sdk/openai';
-import { streamText, tool, UIMessage, convertToModelMessages } from 'ai';
+import { convertToModelMessages, streamText, tool, UIMessage } from 'ai';
+import Fastify from 'fastify';
 import { z } from 'zod';
 
-dotenv.config();
+import { db } from './db/db';
 
 const app = Fastify({ logger: true });
 
+/**
+ * Tests the API connection
+ */
 app.get('/api', async (request, reply) => {
 	return { hello: 'world' };
+});
+
+/**
+ * Tests the database connection
+ */
+app.get('/api/db', async (request, reply) => {
+	return await db.run('SELECT 42');
 });
 
 app.post('/api/chat', async (request, reply) => {
