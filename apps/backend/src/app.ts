@@ -5,7 +5,7 @@ import { convertToModelMessages, streamText, tool, UIMessage } from 'ai';
 import Fastify from 'fastify';
 import { z } from 'zod';
 
-import { auth } from '../../frontend/src/lib/auth';
+import { auth } from './auth';
 import { db } from './db/db';
 
 const app = Fastify({ logger: true });

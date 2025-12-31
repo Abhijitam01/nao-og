@@ -1,8 +1,7 @@
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { signIn } from '@/lib/auth-client';
+import { SignForm } from '@/components/ui/signForm';
 
 export const Route = createFileRoute('/signin')({
 	component: SignInForm,
@@ -24,7 +23,6 @@ function SignInForm() {
 			},
 			{
 				onSuccess: () => {
-					console.log('User signed in successfully');
 					navigate({ to: '/' });
 				},
 				onError: (error) => {
@@ -41,51 +39,34 @@ function SignInForm() {
 		});
 	};
 
+	const fields = [
+		{
+			id: 'email',
+			name: 'email',
+			type: 'email',
+			label: 'Email',
+			placeholder: 'Enter your email',
+		},
+		{
+			id: 'password',
+			name: 'password',
+			type: 'password',
+			label: 'Password',
+			placeholder: 'Enter your password',
+		},
+	];
+
 	return (
-		<div className='container mx-auto max-w-md p-8'>
-			<h1 className='text-3xl font-bold mb-6'>Sign In</h1>
-			<form onSubmit={handleSubmit} className='space-y-4'>
-				<div className='space-y-2'>
-					<label htmlFor='email' className='text-sm font-medium'>
-						Email
-					</label>
-					<Input
-						id='email'
-						name='email'
-						type='email'
-						placeholder='Enter your email'
-						value={formData.email}
-						onChange={handleChange}
-						required
-					/>
-				</div>
-
-				<div className='space-y-2'>
-					<label htmlFor='password' className='text-sm font-medium'>
-						Password
-					</label>
-					<Input
-						id='password'
-						name='password'
-						type='password'
-						placeholder='Enter your password'
-						value={formData.password}
-						onChange={handleChange}
-						required
-					/>
-				</div>
-
-				<Button type='submit' className='w-full'>
-					Sign In
-				</Button>
-			</form>
-
-			<p className='text-center text-sm text-muted-foreground mt-4'>
-				Don't have an account?{' '}
-				<Link to='/signup' className='text-primary hover:underline font-medium'>
-					Sign up
-				</Link>
-			</p>
-		</div>
+		<SignForm
+			title='Sign In'
+			fields={fields}
+			formData={formData}
+			onSubmit={handleSubmit}
+			onChange={handleChange}
+			submitButtonText='Sign In'
+			footerText="Don't have an account?"
+			footerLinkText='Sign up'
+			footerLinkTo='/signup'
+		/>
 	);
 }

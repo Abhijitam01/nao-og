@@ -1,8 +1,7 @@
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { signUp } from '@/lib/auth-client';
+import { SignForm } from '@/components/ui/signForm';
 
 export const Route = createFileRoute('/signup')({
 	component: SignUpForm,
@@ -26,7 +25,6 @@ function SignUpForm() {
 			},
 			{
 				onSuccess: () => {
-					console.log('User signed up successfully');
 					navigate({ to: '/' });
 				},
 				onError: (error) => {
@@ -43,66 +41,39 @@ function SignUpForm() {
 		});
 	};
 
+	const fields = [
+		{
+			id: 'name',
+			name: 'name',
+			type: 'text',
+			label: 'Name',
+		},
+		{
+			id: 'email',
+			name: 'email',
+			type: 'email',
+			label: 'Email',
+			placeholder: 'test@gmail.com',
+		},
+		{
+			id: 'password',
+			name: 'password',
+			type: 'password',
+			label: 'Password',
+		},
+	];
+
 	return (
-		<div className='container mx-auto max-w-md p-8'>
-			<h1 className='text-3xl font-bold mb-6'>Sign Up</h1>
-			<form onSubmit={handleSignUp} className='space-y-4'>
-				<div className='space-y-2'>
-					<label htmlFor='name' className='text-sm font-medium'>
-						Name
-					</label>
-					<Input
-						id='name'
-						name='name'
-						type='text'
-						placeholder='Enter your name'
-						value={formData.name}
-						onChange={handleChange}
-						required
-					/>
-				</div>
-
-				<div className='space-y-2'>
-					<label htmlFor='email' className='text-sm font-medium'>
-						Email
-					</label>
-					<Input
-						id='email'
-						name='email'
-						type='email'
-						placeholder='Enter your email'
-						value={formData.email}
-						onChange={handleChange}
-						required
-					/>
-				</div>
-
-				<div className='space-y-2'>
-					<label htmlFor='password' className='text-sm font-medium'>
-						Password
-					</label>
-					<Input
-						id='password'
-						name='password'
-						type='password'
-						placeholder='Enter your password'
-						value={formData.password}
-						onChange={handleChange}
-						required
-					/>
-				</div>
-
-				<Button type='submit' className='w-full'>
-					Sign Up
-				</Button>
-			</form>
-
-			<p className='text-center text-sm text-muted-foreground mt-4'>
-				Already have an account?{' '}
-				<Link to='/signin' className='text-primary hover:underline font-medium'>
-					Sign in
-				</Link>
-			</p>
-		</div>
+		<SignForm
+			title='Sign Up'
+			fields={fields}
+			formData={formData}
+			onSubmit={handleSignUp}
+			onChange={handleChange}
+			submitButtonText='Sign Up'
+			footerText='Already have an account?'
+			footerLinkText='Sign in'
+			footerLinkTo='/signin'
+		/>
 	);
 }
